@@ -11,7 +11,8 @@ const { SubMenu, Item } = Menu;
 
 export default memo(function DYPageSider(props) {
   // props and state
-  const [selectedKeys, setSelectedKeys] = useState("");
+  const [selectedKeys, setSelectedKeys] = useState([]);
+  const [openKeys, setOpenKeys] = useState([]);
 
   // redux hooks
   const { collapsed } = useSelector(state => ({
@@ -19,16 +20,28 @@ export default memo(function DYPageSider(props) {
   }), shallowEqual);
 
   // other hooks
-  const location = useLocation();
+  const { pathname } = useLocation();
   useEffect(() => {
-    setSelectedKeys(location.pathname);
-  }, [location])
+    const rank = pathname.split("/").filter(item => item !== "");
+    switch (rank.length) {
+      case 1:
+        setSelectedKeys([pathname]);
+        break
+      case 2: 
+        setOpenKeys([pathname.substr(0, pathname.lastIndexOf("/"))]);
+        setSelectedKeys([pathname]);
+        break
+      default:
+    }
+  }, [pathname])
 
   // function handle
-  const clickMenu = useCallback((info) => {
-    console.log(props, "info")
-    setSelectedKeys(info.key)
-  }, [props]);
+  const clickMenu = useCallback(info => {
+    setSelectedKeys([info.key])
+  }, []);
+  const changeOpen = useCallback(openKeys => {
+    setOpenKeys([openKeys[1]]);
+  }, [])
   const renderSubMenu = (subMenu) => {
     return (
       <SubMenu key={subMenu.path} icon={subMenu.icon} title={subMenu.title}>
@@ -47,7 +60,7 @@ export default memo(function DYPageSider(props) {
   const renderMenuItem = (menuItem) => {
     return (
       <Item key={menuItem.path} icon={menuItem.icon}>
-        <NavLink to={menuItem.path}>{menuItem.title}</NavLink>
+        <NavLink to={menuItem.path} replace>{menuItem.title}</NavLink>
       </Item>
     )
   }
@@ -61,7 +74,9 @@ export default memo(function DYPageSider(props) {
         <div className="logo" />
         <Menu theme="dark"
               mode="inline"
+              openKeys={openKeys}
               selectedKeys={selectedKeys}
+              onOpenChange={openKeys => changeOpen(openKeys)}
               onClick={info => clickMenu(info)} >
           {
             menus.map((item, index) => {
