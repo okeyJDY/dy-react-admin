@@ -1,5 +1,6 @@
-import React, { memo } from 'react';
+import React, { memo, useState, useEffect, useCallback } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
+import { NavLink, useLocation } from 'react-router-dom';
 
 import { menus } from '@/public/local-data';
 
@@ -8,17 +9,26 @@ import { DYPageSiderWrapper } from './style';
 
 const { SubMenu, Item } = Menu;
 
-export default memo(function DYPageSider() {
+export default memo(function DYPageSider(props) {
+  // props and state
+  const [selectedKeys, setSelectedKeys] = useState("");
 
   // redux hooks
   const { collapsed } = useSelector(state => ({
     collapsed: state.getIn(["main", "collapsed"])
   }), shallowEqual);
 
+  // other hooks
+  const location = useLocation();
+  useEffect(() => {
+    setSelectedKeys(location.pathname);
+  }, [location])
+
   // function handle
-  const clickMenu = (info) => {
-    console.log(info, "info")
-  };
+  const clickMenu = useCallback((info) => {
+    console.log(props, "info")
+    setSelectedKeys(info.key)
+  }, [props]);
   const renderSubMenu = (subMenu) => {
     return (
       <SubMenu key={subMenu.path} icon={subMenu.icon} title={subMenu.title}>
@@ -37,7 +47,7 @@ export default memo(function DYPageSider() {
   const renderMenuItem = (menuItem) => {
     return (
       <Item key={menuItem.path} icon={menuItem.icon}>
-        {menuItem.title}
+        <NavLink to={menuItem.path}>{menuItem.title}</NavLink>
       </Item>
     )
   }
@@ -51,7 +61,8 @@ export default memo(function DYPageSider() {
         <div className="logo" />
         <Menu theme="dark"
               mode="inline"
-              onClick={clickMenu} >
+              selectedKeys={selectedKeys}
+              onClick={info => clickMenu(info)} >
           {
             menus.map((item, index) => {
               return (
