@@ -27,22 +27,22 @@ export default memo(function DYPageSider(props) {
       case 1:
         setSelectedKeys([pathname]);
         break
-      case 2: 
+      case 2:
         setOpenKeys([pathname.substr(0, pathname.lastIndexOf("/"))]);
         setSelectedKeys([pathname]);
         break
       default:
     }
-  }, [pathname])
+  }, [pathname]);
 
   // function handle
   const clickMenu = useCallback(info => {
-    setSelectedKeys([info.key])
+    setSelectedKeys([info.key]);
   }, []);
   const changeOpen = useCallback(openKeys => {
-    setOpenKeys([openKeys[1]]);
-  }, [])
-  const renderSubMenu = (subMenu) => {
+    setOpenKeys(openKeys);
+  }, []);
+  const renderSubMenu = subMenu => {
     return (
       <SubMenu key={subMenu.path} icon={subMenu.icon} title={subMenu.title}>
         {
@@ -57,27 +57,27 @@ export default memo(function DYPageSider(props) {
       </SubMenu>
     )
   };
-  const renderMenuItem = (menuItem) => {
+  const renderMenuItem = menuItem => {
     return (
       <Item key={menuItem.path} icon={menuItem.icon}>
-        <NavLink to={menuItem.path} replace>{menuItem.title}</NavLink>
+        <NavLink replace to={menuItem.path}>{menuItem.title}</NavLink>
       </Item>
     )
-  }
+  };
 
   return (
     <DYPageSiderWrapper>
-      <Layout.Sider className="sider"
-                    collapsible 
+      <Layout.Sider collapsible 
                     trigger={null} 
+                    className="sider"
                     collapsed={collapsed}>
         <div className="logo" />
         <Menu theme="dark"
               mode="inline"
               openKeys={openKeys}
               selectedKeys={selectedKeys}
-              onOpenChange={openKeys => changeOpen(openKeys)}
-              onClick={info => clickMenu(info)} >
+              onClick={info => clickMenu(info)}
+              onOpenChange={openKeys => changeOpen(openKeys)} >
           {
             menus.map((item, index) => {
               return (

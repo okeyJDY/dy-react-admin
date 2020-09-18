@@ -1,6 +1,10 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import Home from '@/pages/home';
+
+import DYHome from '@/pages/home';
+import DYBasic from '@/pages/basic';
+import DYButtonDemo from '@/pages/basic/button-demo';
+import DYIconDemo from '@/pages/basic/icon-demo';
 
 const routes = [
   {
@@ -10,7 +14,26 @@ const routes = [
   },
   {
     path: "/home",
-    component: Home
+    component: DYHome
+  },
+  {
+    path: "/basic",
+    component: DYBasic,
+    routes: [
+      {
+        path: "/basic",
+        exact: true,
+        render: () => <Redirect to="/basic/button" />
+      },
+      {
+        path: "/basic/button",
+        component: DYButtonDemo
+      },
+      {
+        path: "/basic/icon",
+        component: DYIconDemo
+      }
+    ]
   }
 ]
 

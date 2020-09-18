@@ -1,9 +1,9 @@
 import React, { memo } from 'react';
 
-export default memo(function Home() {
+export default memo(function DYHome() {
   return (
     <div>
-      Home
+      DYHome
     </div>
   )
 })

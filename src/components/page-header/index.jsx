@@ -25,7 +25,7 @@ export default memo(function DYPageHeader() {
             <MenuUnfoldOutlined className="header-item"
                                 onClick={e => dispatch(changeCollapsedAction(!collapsed))} /> :
             <MenuFoldOutlined className="header-item"
-                            onClick={e => dispatch(changeCollapsedAction(!collapsed))} />
+                              onClick={e => dispatch(changeCollapsedAction(!collapsed))} />
         }
       </Layout.Header>
     </DYPageHeaderWrapper>

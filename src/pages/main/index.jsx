@@ -16,6 +16,7 @@ export default memo(function DYPageMain() {
         <Layout>
           <DYPageHeader />
           <DYPageContent />
+          <Layout.Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Layout.Footer>
         </Layout>
       </Layout>
     </HashRouter>
