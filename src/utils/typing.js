@@ -34,7 +34,6 @@ class Typing {
         });
       }
     }
-    console.log(arr);
     return arr;
   }
   // 在浏览器中打印字符
