@@ -39,7 +39,7 @@ class Typing {
   // 在浏览器中打印字符
   print = (dom, val, callback) => {
     setTimeout(() => {
-      dom.appendChild(document.createTextNode(val));
+      dom && dom.appendChild(document.createTextNode(val));
       callback();
     }, this.delay);
   }

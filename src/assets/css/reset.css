@@ -45,6 +45,16 @@ img {
   padding: 0;
 }
 
+.ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) 
+.ant-menu-item-selected {
+  background-color: transparent;
+  border-right: 3px solid rgb(24, 144, 255);
+}
+
+.ant-menu-dark .ant-menu-item-selected .anticon {
+  color: rgb(24, 144, 255);
+}
+
 /* 全局样式配置 */
 body, textarea, select, input, button {
   font-size: 12px;

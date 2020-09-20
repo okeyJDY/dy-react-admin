@@ -11,4 +11,8 @@ export const DYPageSiderWrapper = styled.div`
       margin: 16px;
     }
   }
+
+  a.active {
+    color: rgb(24, 144, 255)!important;
+  }
 `
